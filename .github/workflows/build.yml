@@ -19,7 +19,7 @@ jobs:
       - name: NPM Build
         run: npm run build
   deploy:
-    name: VueMenu
+    name: Source
     needs: build
     runs-on: ubuntu-latest
     steps:
