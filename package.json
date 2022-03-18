@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node http-server ./dist --cors"
+    "start": "node http-server -p 80 ./dist --cors"
   },
   "dependencies": {
     "cors": "^2.8.5",
