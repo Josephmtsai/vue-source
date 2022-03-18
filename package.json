@@ -10,6 +10,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "http-server": "^14.1.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {
