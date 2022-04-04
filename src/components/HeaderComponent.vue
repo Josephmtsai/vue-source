@@ -39,8 +39,8 @@ import { ref, watch, watchEffect } from 'vue';
 export default {
   name: 'HelloWorld',
   setup() {
-    const outSideNumber = ref(uv ? uv.data : 0);
-    const outSideVariable = ref(uv);
+    const outSideNumber = ref(window.uv ? window.uv.data : 0);
+    const outSideVariable = ref(window.uv);
     const url = ref(location.href);
     watch(outSideVariable, (newValue, oldValue) => {
       console.log('watch outSideVariable', newValue, oldValue);
