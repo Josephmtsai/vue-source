@@ -30,17 +30,16 @@
         </a>
       </div>
       <div>uv {{ outSideVariable }}</div>
-      <div>uv data {{ outSideNumber }}</div>
     </div>
   </nav>
 </template>
 <script>
-import { ref, watch, watchEffect } from 'vue';
+import { ref, watch, reactive, watchEffect } from 'vue';
 export default {
   name: 'HelloWorld',
   setup() {
-    const outSideNumber = ref(window.uv ? window.uv.data : 0);
-    const outSideVariable = ref(window.uv);
+    //const outSideNumber = ref(window.uv ? window.uv.data : 0);
+    const outSideVariable = reactive(window.uv);
     const url = ref(location.href);
     watch(outSideVariable, (newValue, oldValue) => {
       console.log('watch outSideVariable', newValue, oldValue);
@@ -50,7 +49,7 @@ export default {
       console.log('watch outSideNumber', newValue, oldValue);
     });
     watchEffect(() => {
-      console.log('watchEffect', outSideVariable.value, outSideNumber.value);
+      console.log('watchEffect', outSideVariable);
     });
     return {
       outSideNumber,
