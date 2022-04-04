@@ -45,14 +45,10 @@ export default {
       console.log('watch outSideVariable', newValue, oldValue);
     });
 
-    watch(outSideVariable, (newValue, oldValue) => {
-      console.log('watch outSideNumber', newValue, oldValue);
-    });
     watchEffect(() => {
       console.log('watchEffect', outSideVariable);
     });
     return {
-      outSideNumber,
       url,
       outSideVariable,
     };
