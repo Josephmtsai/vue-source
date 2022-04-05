@@ -29,7 +29,7 @@
           Blog
         </a>
       </div>
-      <div>uv {{ outSideVariable }}</div>
+      <div>uv {{ outSideNumber }}</div>
     </div>
   </nav>
 </template>
@@ -38,20 +38,30 @@ import { ref, watch, reactive, watchEffect } from 'vue';
 export default {
   name: 'HelloWorld',
   setup() {
-    //const outSideNumber = ref(window.uv ? window.uv.data : 0);
-    const outSideVariable = reactive(window.uv);
+    const outSideNumber = ref(window.uv.data);
+
     const url = ref(location.href);
-    watch(outSideVariable, (newValue, oldValue) => {
-      console.log('watch outSideVariable', newValue, oldValue);
+    watch(outSideNumber, (newValue, oldValue) => {
+      console.log('watch outSideNumber', newValue, oldValue);
     });
 
     watchEffect(() => {
-      console.log('watchEffect', outSideVariable);
+      console.log('watchEffect', outSideNumber);
     });
     return {
       url,
-      outSideVariable,
+      outSideNumber,
     };
+  },
+  onMounted() {
+    document.addEventListener('onUserDataUpdate', (event) => {
+      console.log(event);
+      outSideNumber = event.data;
+    });
+  },
+
+  onUnmounted() {
+    document.removeEventListener('onUserDataUpdate');
   },
 };
 </script>
