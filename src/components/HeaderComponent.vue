@@ -34,20 +34,14 @@ export default {
     const outSideNumber = ref(window.uv.data);
     const url = ref(location.href);
     const showSidebar = ref(false);
-    watch(outSideNumber, (newValue, oldValue) => {
-      console.log('watch outSideNumber', newValue, oldValue);
-    });
 
-    watchEffect(() => {
-      console.log('watchEffect', outSideNumber);
-    });
     const showHideSideBar = () => {
       showSidebar.value = !showSidebar.value;
     };
     onMounted(() => {
       document.addEventListener('onUserDataUpdate', (event) => {
         console.log(event);
-        outSideNumber = event.data;
+        outSideNumber.value = event.detail.data;
       });
     });
 
