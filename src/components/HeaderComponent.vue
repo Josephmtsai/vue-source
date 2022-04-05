@@ -16,31 +16,24 @@
         >
           Docs
         </a>
-        <a
-          href="https://flowbite.com"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-        >
-          Examples
-        </a>
-        <a
-          href="https://flowbite.com"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-        >
-          Blog
-        </a>
+        <button @click="showHideSideBar()">showHideSideBar</button>
       </div>
       <div>uv {{ outSideNumber }}</div>
     </div>
   </nav>
+  <SideBar v-if="showSidebar"></SideBar>
 </template>
 <script>
-import { ref, watch, reactive, watchEffect } from 'vue';
+import SideBar from './SideBar.vue';
+import { ref, watch, onMounted, onUnmounted, watchEffect } from 'vue';
 export default {
-  name: 'HelloWorld',
+  components: {
+    SideBar,
+  },
   setup() {
     const outSideNumber = ref(window.uv.data);
-
     const url = ref(location.href);
+    const showSidebar = ref(false);
     watch(outSideNumber, (newValue, oldValue) => {
       console.log('watch outSideNumber', newValue, oldValue);
     });
@@ -48,20 +41,25 @@ export default {
     watchEffect(() => {
       console.log('watchEffect', outSideNumber);
     });
+    const showHideSideBar = () => {
+      showSidebar.value = !showSidebar.value;
+    };
+    onMounted(() => {
+      document.addEventListener('onUserDataUpdate', (event) => {
+        console.log(event);
+        outSideNumber = event.data;
+      });
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener('onUserDataUpdate');
+    });
     return {
       url,
       outSideNumber,
+      showHideSideBar,
+      showSidebar,
     };
-  },
-  onMounted() {
-    document.addEventListener('onUserDataUpdate', (event) => {
-      console.log(event);
-      outSideNumber = event.data;
-    });
-  },
-
-  onUnmounted() {
-    document.removeEventListener('onUserDataUpdate');
   },
 };
 </script>
